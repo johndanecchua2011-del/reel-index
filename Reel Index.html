@@ -1,0 +1,186 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Reel Index</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@500;700&display=swap">
+<style>
+/* Layout: slate-style masthead, sticky filter bar, card grid of tools, then a long-form workflow and sources. */
+:root{
+  --bg:#f3f5f6; --surface:#ffffff; --fg:#14201f; --muted:#5a6b6a; --line:#d5dddd;
+  --accent:#0a6a68; --accent-fg:#ffffff; --free:#b45309; --free-bg:#fdeed6;
+  --font-display:"Space Grotesk",system-ui,sans-serif; --font-body:"Inter",system-ui,sans-serif; --font-mono:"JetBrains Mono",ui-monospace,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0f1716; --surface:#172221; --fg:#e6efee; --muted:#9db0ae; --line:#2a3a39;
+  --accent:#4fd1c5; --accent-fg:#06201e; --free:#f5b86b; --free-bg:#3a2a12; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0f1716; --surface:#172221; --fg:#e6efee; --muted:#9db0ae; --line:#2a3a39;
+  --accent:#4fd1c5; --accent-fg:#06201e; --free:#f5b86b; --free-bg:#3a2a12; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font:15px/1.55 var(--font-body);padding-block:0 48px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.wrap{max-width:1180px;margin:0 auto}
+header{padding:36px 0 20px;border-bottom:2px solid var(--fg)}
+.kicker{font:500 12px var(--font-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+h1{font:700 clamp(34px,6vw,60px)/1 var(--font-display);margin:8px 0 12px;letter-spacing:-.02em;text-wrap:balance}
+.lede{max-width:64ch;color:var(--muted);margin:0}
+.reality{margin:20px 0 0;padding:14px 16px;background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--accent);max-width:80ch}
+.reality b{font-family:var(--font-display)}
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);padding:14px 0;border-bottom:1px solid var(--line);display:grid;gap:10px}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:10}
+.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.chip{font:500 13px var(--font-body);padding:6px 12px;border:1px solid var(--line);background:var(--surface);color:var(--fg);cursor:pointer;border-radius:999px}
+.chip[aria-pressed="true"]{background:var(--accent);color:var(--accent-fg);border-color:var(--accent)}
+.chip:focus-visible,input:focus-visible,a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+input[type=search]{flex:1 1 220px;min-width:0;padding:8px 12px;border:1px solid var(--line);background:var(--surface);color:var(--fg);font:inherit;border-radius:6px}
+.count{font:12px var(--font-mono);color:var(--muted);margin-left:auto}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr));gap:16px;padding:20px 0}
+.card{background:var(--surface);border:1px solid var(--line);padding:16px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.card h3{font:700 19px/1.2 var(--font-display);margin:0}
+.tags{display:flex;flex-wrap:wrap;gap:6px}
+.tag{font:11px var(--font-mono);text-transform:uppercase;letter-spacing:.05em;color:var(--muted);border:1px solid var(--line);padding:2px 6px}
+.facts{display:grid;gap:6px;margin:0}
+.facts div{display:grid;grid-template-columns:82px 1fr;gap:8px;font-size:13.5px}
+.facts dt{font:11px var(--font-mono);text-transform:uppercase;letter-spacing:.05em;color:var(--muted);padding-top:2px}
+.facts dd{margin:0;min-width:0;overflow-wrap:anywhere}
+.free{background:var(--free-bg);color:var(--free);font-weight:500;padding:0 4px}
+.note{font-size:13.5px;color:var(--muted);margin:0}
+.card a.go{margin-top:auto;font:500 13px var(--font-body);color:var(--accent);text-decoration:none;border-top:1px solid var(--line);padding-top:10px}
+.card a.go:hover{text-decoration:underline}
+.empty{padding:40px 0;color:var(--muted)}
+section.info{padding:24px 0;border-top:1px solid var(--line)}
+section.info h2{font:700 26px var(--font-display);margin:0 0 12px}
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));gap:12px;margin:0;padding:0;list-style:none}
+.steps li{background:var(--surface);border:1px solid var(--line);padding:14px}
+.steps b{display:block;font-family:var(--font-display);margin-bottom:4px}
+.src{columns:2 280px;font-size:13px;padding-left:18px;margin:0}
+.src a{color:var(--accent)}
+small.f{display:block;color:var(--muted);margin-top:12px;max-width:80ch}
+@media (prefers-reduced-motion:no-preference){.card{transition:border-color .15s}.card:hover{border-color:var(--accent)}}
+</style>
+
+<div class="wrap">
+<header>
+  <div class="kicker">Checked 14 Nov 2026 · public reviews and vendor pages</div>
+  <h1>Reel Index</h1>
+  <p class="lede">Every kind of AI video generator in one place: cinematic models, long-form builders, avatar presenters, multi-model hubs, editors and open-source models. Filter to what has a free tier.</p>
+  <p class="reality"><b>Read this first.</b> No tool makes one long cinematic video from one prompt. Cinematic models produce clips of roughly 5 to 40 seconds. Long videos (10+ minutes) come from avatar and script-to-video tools, or from chaptered clips you stitch together (see the workflow below).</p>
+</header>
+
+<div class="bar">
+  <div class="row" id="cats" role="group" aria-label="Category"></div>
+  <div class="row">
+    <input type="search" id="q" placeholder="Search tools, e.g. Kling, 4K, avatar" aria-label="Search tools">
+    <button class="chip" id="freeOnly" aria-pressed="false">Free tier only</button>
+    <span class="count" id="count" aria-live="polite"></span>
+  </div>
+</div>
+
+<main><div class="grid" id="grid"></div><div class="empty" id="empty" hidden>No tools match. Clear the search or a filter.</div></main>
+
+<section class="info">
+  <h2>Making a 10-minute video with free credits</h2>
+  <ol class="steps">
+    <li><b>Write a shot list</b>Split the video into chapters of 4 to 8 shots. Keep character and setting descriptions identical in every prompt.</li>
+    <li><b>Spend credits on the hero shots</b>Use the daily free credits (Flow, Kling, Krea) for the few shots that need cinematic quality. Draft at low resolution first.</li>
+    <li><b>Fill the rest with cheap formats</b>Use an avatar or script-to-video tool for narration sections, and image-to-video to keep characters consistent between clips.</li>
+    <li><b>Assemble in an editor</b>Stitch chapters in CapCut, Canva or Kapwing. Daily credit refills mean a long project can run over several days.</li>
+  </ol>
+  <small class="f">Sora is not an option: its consumer app was shut down in April 2026 and the API was scheduled to sunset in September 2026. Free allowances change often, so confirm on the vendor page before you plan around one.</small>
+</section>
+
+<section class="info">
+  <h2>Sources</h2>
+  <ul class="src">
+    <li><a href="https://openart.ai/blog/best-ai-video-generators/">OpenArt: Best AI Video Generators in 2026</a></li>
+    <li><a href="https://www.synthesia.io/post/best-ai-video-generators">Synthesia: best AI video generators</a></li>
+    <li><a href="https://getleadwave.io/blog/best-ai-video-generators">LeadWave: 20 video models ranked</a></li>
+    <li><a href="https://emergent.sh/learn/best-ai-video-generators">Emergent: free tiers tested</a></li>
+    <li><a href="https://techjournal.org/best-ai-video-generators">Tech Journal: 15 best AI video generators</a></li>
+    <li><a href="https://fluxnote.io/guides/free-ai-video-generators-answered">Fluxnote: free AI video generators answered</a></li>
+    <li><a href="https://www.heygen.com/blog/best-ai-video-generator-long-youtube-videos">HeyGen: long YouTube video generators</a></li>
+    <li><a href="https://www.renderforest.com/blog/best-ai-video-generator-long-videos">Renderforest: generators for long videos</a></li>
+    <li><a href="https://ltx.io/blog/best-open-source-video-generation-models">LTX: open source video models</a></li>
+    <li><a href="https://pinggy.io/amp/blog/best_video_generation_ai_models/">Pinggy: video generation models in 2026</a></li>
+    <li><a href="https://saascrmreview.com/?p=15012">SaaS CRM Review: free AI video generators</a></li>
+  </ul>
+</section>
+</div>
+
+<script>
+var CATS=["All","Cinematic models","Long-form","Avatars","Multi-model hubs","Editors & social","Ads","Open source"];
+var T=[
+{n:"Google Flow (Veo 3.1)",c:["Cinematic models"],len:"Short clips, 4K/60fps with native audio",free:"50 credits/day, about 5 Veo 3.1 Lite clips",best:"Prompt accuracy, first/last-frame control, sound with the picture",note:"Ranked best overall for realism by several reviews. First attempts can need retries.",u:"https://labs.google/flow"},
+{n:"Gemini Omni",c:["Cinematic models"],len:"Shots up to 40 s, native 4K",free:null,best:"Worldbuilding and longer single shots",note:"From $19.99/mo on Google AI Pro. A Flash version is free in some YouTube Shorts tools and YouTube Create.",u:"https://gemini.google.com"},
+{n:"Seedance 2.5",c:["Cinematic models"],len:"Short clips",free:"Through host platforms; varies",best:"Photorealism and fast commercial output",note:"ByteDance model. Top of several leaderboards in November 2026.",u:"https://dreamina.capcut.com"},
+{n:"Kling 3.0",c:["Cinematic models"],len:"Clips up to 15 s, 4K/60fps, native audio",free:"66 credits/day, watermarked",best:"Human characters and motion, best value",note:"Paid plans from about $8.80/mo. Iterating burns credits quickly.",u:"https://klingai.com"},
+{n:"MiniMax Hailuo",c:["Cinematic models"],len:"5 s clips at up to 2K",free:"60 credits; one 5 s 2K clip costs 20",best:"Best free high-resolution tests",note:"The H3 model sits near the top of public video arenas.",u:"https://hailuoai.video"},
+{n:"Wan 3.0",c:["Cinematic models"],len:"Short clips",free:"Free product frame tests",best:"Strong text-to-video on Artificial Analysis",note:"Alibaba. Earlier Wan versions are open source (see Open source).",u:null},
+{n:"Runway Gen-4.5",c:["Cinematic models"],len:"Up to 16 s on Standard",free:"125 free credits",best:"Hands-on camera and motion control",note:"From $15/mo. Credits do not equal model access, so check which models your plan includes.",u:"https://runwayml.com"},
+{n:"Luma Ray3",c:["Cinematic models"],len:"10 s, 1080p HDR",free:null,best:"Photorealism, 16-bit HDR, video-to-video edits",note:"From $7.99/mo.",u:"https://lumalabs.ai"},
+{n:"Pika 2.5",c:["Cinematic models"],len:"Short clips",free:"Limited",best:"Cinematic product shots, social effects",note:"Good for quick social content, not for long projects.",u:"https://pika.art"},
+{n:"PixVerse V6",c:["Cinematic models"],len:"Short multi-shot clips",free:"Check current access",best:"Multi-shot, transitions, reference-to-video, audio",note:"Model and resolution access depends on your account.",u:"https://pixverse.ai"},
+{n:"Vidu",c:["Cinematic models"],len:"Short clips",free:"Check current access",best:"Consistent characters via multi-reference and start/end frames",note:"Useful when the same character must appear in many clips.",u:"https://www.vidu.com"},
+{n:"HeyGen",c:["Long-form","Avatars"],len:"30 min in one pass; up to 60 min on Business",free:"Small (about 3 short videos)",best:"Long talking-head videos, marketing and sales",note:"From about $24 to $29/mo. Counts videos, so test with short ones.",u:"https://www.heygen.com"},
+{n:"Synthesia",c:["Long-form","Avatars"],len:"Multi-minute avatar videos",free:"A few minutes per month, 9 avatars (sources say 3 to 10 min)",best:"Training and corporate video, 140+ languages",note:"Less flexible for experimental or cinematic work.",u:"https://www.synthesia.io"},
+{n:"Colossyan",c:["Avatars"],len:"Multi-minute avatar videos",free:"Check current access",best:"Structured workplace learning",note:"Often compared with Synthesia and Elai.",u:"https://www.colossyan.com"},
+{n:"AI Studios",c:["Avatars"],len:"Multi-minute avatar videos",free:"Check current access",best:"Business avatars, dubbing, document-to-video",note:"7,000+ templates and 4K team export.",u:"https://www.aistudios.com"},
+{n:"Mootion",c:["Long-form"],len:"Long-form with no stated time limit",free:"Check current access",best:"A complete long video from one prompt",note:"Vendor claim. Test a short project first.",u:"https://www.mootion.com"},
+{n:"MagicLight",c:["Long-form"],len:"Projects up to 50 min (advertised)",free:"Check current access",best:"Long-form storytelling",note:"Length is the vendor's own claim.",u:null},
+{n:"Renderforest",c:["Long-form","Editors & social"],len:"Editable long-form projects",free:"Limited",best:"Branded videos with templates, stock and AI models",note:"Strong when you need an editable project, not just one render.",u:"https://www.renderforest.com"},
+{n:"InVideo AI",c:["Long-form","Editors & social"],len:"Script-to-video, multi-minute",free:"Watermarked in most reviews",best:"One written brief to a finished marketing video",note:"From about $20/mo. Stock-heavy output may need editing.",u:"https://invideo.io"},
+{n:"Pictory",c:["Long-form","Editors & social"],len:"Turns long recordings, articles and URLs into video",free:"Check current access",best:"Repurposing existing long content",note:"Leaders for blog-to-video with Lumen5.",u:"https://pictory.ai"},
+{n:"Lumen5",c:["Editors & social"],len:"Article-to-video",free:"Check current access",best:"Blog posts to social video",note:"Template driven.",u:"https://lumen5.com"},
+{n:"Fliki",c:["Long-form","Editors & social"],len:"Narrated, faceless videos",free:"Check current access",best:"2,000+ voices in 80+ languages",note:"Idea, script, blog or slides to video.",u:"https://fliki.ai"},
+{n:"VidspotAI",c:["Long-form"],len:"Beyond 60 s (vendor claim)",free:"Free, exports capped at 720p",best:"Idea-to-publish workflow, 20+ voiceover languages",note:"4K needs the Professional plan.",u:null},
+{n:"Higgsfield",c:["Multi-model hubs"],len:"Depends on model",free:"24-hour free trial",best:"70+ camera motion presets, many models in one plan",note:"From $19/mo.",u:"https://higgsfield.ai"},
+{n:"Krea",c:["Multi-model hubs"],len:"Depends on model",free:"100 units/day, about 2 short videos",best:"Several leading engines in one workflow",note:"Daily refill suits multi-day projects.",u:"https://www.krea.ai"},
+{n:"OpenArt",c:["Multi-model hubs"],len:"Prompt, script or song to full video",free:"Check current access",best:"Consistent characters and voiceover",note:"Top overall pick in one 2026 roundup. From $14/mo.",u:"https://openart.ai"},
+{n:"Topview",c:["Multi-model hubs","Ads"],len:"Short ads",free:"Check current access",best:"Veo, Kling and Seedance models for product video",note:"Built for ads and UGC-style clips.",u:"https://www.topview.ai"},
+{n:"Morphic",c:["Multi-model hubs"],len:"Depends on model",free:"Check current access",best:"Runs open models (Wan, LTX) and closed ones (Veo, Kling) with no GPU setup",note:"One visual canvas.",u:"https://morphic.com"},
+{n:"DomoAI",c:["Multi-model hubs"],len:"Short clips",free:"Check current access",best:"Stylized animation from image, video and audio references",note:"From $9/mo billed annually.",u:"https://domoai.app"},
+{n:"Canva",c:["Editors & social"],len:"Up to 5 min of AI video per month (one source)",free:"Free, 1080p, no watermark per one source",best:"Easy for non-technical users",note:"Limits change. Confirm in the app.",u:"https://www.canva.com"},
+{n:"CapCut",c:["Editors & social"],len:"Short clips plus a full editor",free:"Free plan, no published cap",best:"Quick social edits and stitching chapters",note:"Good final assembly tool.",u:"https://www.capcut.com"},
+{n:"Kapwing",c:["Editors & social"],len:"Free exports capped at 1 min",free:"Watermarked, 1-min cap",best:"Clip extraction from long videos, Smart Cut",note:"Pro is $24/mo.",u:"https://www.kapwing.com"},
+{n:"Google Vids",c:["Editors & social"],len:"60 s of AI video per month (personal)",free:"60 s/month",best:"Quick Workspace-style videos",note:"Enough for a few short clips only.",u:null},
+{n:"Adobe Firefly Video",c:["Editors & social","Cinematic models"],len:"Short clips on a multi-track timeline (beta)",free:"Small daily allotment",best:"Commercially safe workflows inside Adobe apps",note:"Standard plan $9.99/mo with 2,000 credits.",u:"https://firefly.adobe.com"},
+{n:"Creatify",c:["Ads"],len:"Short ads",free:"Check current access",best:"Turn a product image into a batch of video ads",note:"Fastest route to ad variants.",u:"https://creatify.ai"},
+{n:"LTX-2.3 / 2.5",c:["Open source"],len:"Clips with 4K at 50fps and synced stereo audio",free:"Free weights; commercial use free under $10M revenue",best:"Only open model with native audio; vertical video",note:"Needs a strong GPU. Hosted playground at console.ltx.io.",u:"https://huggingface.co/Lightricks"},
+{n:"Wan 2.2",c:["Open source"],len:"Short clips",free:"Free, Apache 2.0",best:"Cleanest licence; the 1.3B variant runs in about 8 GB VRAM",note:"Widely supported in ComfyUI.",u:"https://huggingface.co/Wan-AI"},
+{n:"HunyuanVideo 1.5",c:["Open source"],len:"Short clips",free:"Free weights",best:"Strong prompt adherence; about 13.6 GB VRAM minimum",note:"About 75 s render on an RTX 4090. Check the licence terms.",u:"https://github.com/Tencent/HunyuanVideo"},
+{n:"CogVideoX / Mochi 1",c:["Open source"],len:"Short clips",free:"Free weights",best:"Lighter entry points for self-hosting",note:"Lower quality than the newest open models.",u:null}
+];
+var state={cat:"All",free:false,q:""};
+function hasFree(t){return !!t.free&&!/^check/i.test(t.free)}
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+function card(t){
+  var tags=t.c.map(function(x){return '<span class="tag">'+esc(x)+'</span>'}).join("");
+  var free=t.free?(hasFree(t)?'<span class="free">'+esc(t.free)+'</span>':esc(t.free)):'No free tier found';
+  return '<article class="card"><h3>'+esc(t.n)+'</h3><div class="tags">'+tags+'</div><dl class="facts">'+
+   '<div><dt>Length</dt><dd>'+esc(t.len)+'</dd></div>'+
+   '<div><dt>Free</dt><dd>'+free+'</dd></div>'+
+   '<div><dt>Strength</dt><dd>'+esc(t.best)+'</dd></div></dl><p class="note">'+esc(t.note)+'</p>'+
+   (t.u?'<a class="go" href="'+esc(t.u)+'" target="_blank" rel="noopener">Visit '+esc(t.n.split(" (")[0])+' &rarr;</a>':'')+'</article>';
+}
+function render(){
+  var q=state.q.toLowerCase();
+  var list=T.filter(function(t){
+    if(state.cat!=="All"&&t.c.indexOf(state.cat)<0)return false;
+    if(state.free&&!hasFree(t))return false;
+    if(q&&(t.n+" "+t.c.join(" ")+" "+t.len+" "+t.best+" "+t.note).toLowerCase().indexOf(q)<0)return false;
+    return true;});
+  document.getElementById("grid").innerHTML=list.map(card).join("");
+  document.getElementById("empty").hidden=list.length>0;
+  document.getElementById("count").textContent=list.length+" of "+T.length+" tools";
+}
+var catEl=document.getElementById("cats");
+CATS.forEach(function(c){
+  var b=document.createElement("button");b.className="chip";b.textContent=c;b.setAttribute("aria-pressed",c==="All");
+  b.addEventListener("click",function(){state.cat=c;[].forEach.call(catEl.children,function(x){x.setAttribute("aria-pressed",x===b)});render()});
+  catEl.appendChild(b);
+});
+document.getElementById("q").addEventListener("input",function(e){state.q=e.target.value;render()});
+var fo=document.getElementById("freeOnly");
+fo.addEventListener("click",function(){state.free=!state.free;fo.setAttribute("aria-pressed",state.free);render()});
+render();
+</script>
+
+</body></html>
